@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cairns — your notes, straight to your GitHub repo</title>
+  <meta name="description" content="Native Mac and iOS note capture that commits plain markdown straight to a GitHub repository you own. No server, no subscription.">
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --surface: #ffffff;
+      --text: #211f1c;
+      --muted: #6b6862;
+      --accent: #a1573a;
+      --border: #e7e3dd;
+      --shadow: 0 1px 2px rgba(33, 31, 28, .04), 0 8px 24px rgba(33, 31, 28, .05);
+      --radius: 12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14130f;
+        --surface: #1c1b16;
+        --text: #ece9e2;
+        --muted: #a09a8f;
+        --accent: #d98f68;
+        --border: #2c2a23;
+        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero */
+    header { padding: 88px 0 64px; text-align: center; }
+    .mark { color: var(--accent); width: 52px; height: 68px; display: inline-block; }
+    h1 {
+      font-size: 2.6rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 20px 0 0;
+      font-weight: 650;
+    }
+    .tagline {
+      font-size: 1.3rem;
+      color: var(--text);
+      margin: 18px auto 0;
+      max-width: 30ch;
+      font-weight: 450;
+    }
+    .subhero {
+      color: var(--muted);
+      margin: 14px auto 0;
+      max-width: 42ch;
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 550;
+    }
+    .cta:hover { text-decoration: none; opacity: .92; }
+
+    /* Sections */
+    section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 {
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0 0 28px;
+    }
+
+    /* Features */
+    .features { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; }
+    @media (min-width: 620px) {
+      .features { grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+    }
+    .features h3 {
+      margin: 0 0 4px;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+    .features h3 kbd {
+      font: inherit;
+      font-size: .82em;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1px 6px;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+    .features p { margin: 0; color: var(--muted); font-size: .97rem; }
+
+    /* Install */
+    .cards { display: grid; gap: 20px; }
+    @media (min-width: 620px) { .cards { grid-template-columns: 1fr 1fr; } }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+    .card h3 { margin: 0 0 10px; font-size: 1.15rem; }
+    .card p { margin: 0 0 12px; color: var(--muted); font-size: .97rem; }
+    .card p:last-child { margin-bottom: 0; }
+    .card code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .88em;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 1px 5px;
+    }
+
+    /* Closing note */
+    .note p { color: var(--muted); max-width: 58ch; }
+    .note p:first-child { margin-top: 0; }
+
+    footer {
+      padding: 40px 0 72px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .9rem;
+      text-align: center;
+    }
+    footer p { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <!-- A small cairn: stacked stones, largest at the base. -->
+      <svg class="mark" viewBox="0 0 52 68" aria-hidden="true" fill="currentColor">
+        <ellipse cx="26" cy="61" rx="19" ry="6.5"/>
+        <ellipse cx="25" cy="48" rx="15" ry="6"/>
+        <ellipse cx="27" cy="36" rx="12" ry="5.5"/>
+        <ellipse cx="25" cy="25" rx="9" ry="5"/>
+        <ellipse cx="26" cy="15" rx="6" ry="4.5"/>
+      </svg>
+      <h1>Cairns</h1>
+      <p class="tagline">Your notes, straight to your GitHub repo.</p>
+      <p class="subhero">Capture on Mac and iOS. Plain markdown commits. No server, no subscription.</p>
+      <a class="cta" href="https://github.com/nickmeehan/cairns/releases/latest">Download for Mac</a>
+    </header>
+
+    <main>
+      <section>
+        <h2>What it is</h2>
+        <p style="margin-top:0;">Cairns is the capture layer: a blank page that's always one keystroke away,
+        with everything landing as markdown commits in a GitHub repository you own. Heavy editing happens
+        wherever you already work — your IDE, Obsidian, an agent running against the clone.</p>
+      </section>
+
+      <section>
+        <h2>Features</h2>
+        <ul class="features">
+          <li>
+            <h3>Quick capture <kbd>⌘⇧N</kbd></h3>
+            <p>A capture window from anywhere on Mac; open the iOS app to a ready-to-type blank note. Type or dictate.</p>
+          </li>
+          <li>
+            <h3>Your repo, your notes</h3>
+            <p>Every note is a markdown file committed to a GitHub repo you own. Full git history, nothing proprietary.</p>
+          </li>
+          <li>
+            <h3>Works offline</h3>
+            <p>On Mac, notes are local git commits that push when they can; on iOS they queue durably and drain automatically.</p>
+          </li>
+          <li>
+            <h3>Native state</h3>
+            <p>Your GitHub token lives in the Keychain. No browser storage, nothing for the OS to evict.</p>
+          </li>
+          <li>
+            <h3>Agent-ready</h3>
+            <p>Plain markdown in git. Claude Code, Codex, and your own scripts can read and operate on every note.</p>
+          </li>
+          <li>
+            <h3>Auditable</h3>
+            <p>No telemetry, no tracking, no subscription — GitHub already syncs your files for free. Read every line.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Install</h2>
+        <p style="margin:-8px 0 24px; color:var(--muted); font-size:.97rem;">Pre-signing distribution while
+        Cairns finds its audience — App Store / TestFlight come later.</p>
+        <div class="cards">
+          <div class="card">
+            <h3>Mac</h3>
+            <p>Download the <code>.dmg</code> from the
+            <a href="https://github.com/nickmeehan/cairns/releases/latest">latest release</a>.</p>
+            <p>First launch: right-click the app and choose <strong>Open</strong> to get past Gatekeeper
+            (unidentified developer).</p>
+          </div>
+          <div class="card">
+            <h3>iOS</h3>
+            <p>Sideload the <code>.ipa</code> from the release with AltStore or Sideloadly.</p>
+            <p>Or clone the repo and run the <code>ios/</code> app on your device from Xcode with a free
+            Apple ID.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="note">
+        <h2>Source-available</h2>
+        <p>Cairns is developed in the open. View, audit, and fork it on
+        <a href="https://github.com/nickmeehan/cairns">github.com/nickmeehan/cairns</a> — the same repo the
+        releases and this page are built from.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <p><a href="https://github.com/nickmeehan/cairns/blob/main/LICENSE">PolyForm Shield License 1.0.0</a> —
+      use, audit, and fork freely; building a competing product is not allowed.</p>
+      <p>Made by <a href="https://github.com/nickmeehan">Nick Meehan</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
