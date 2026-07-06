@@ -1,0 +1,31 @@
+name: Cairns
+options:
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+packages:
+  CairnsKit:
+    path: ../CairnsKit
+targets:
+  Cairns:
+    type: application
+    platform: iOS
+    sources:
+      - App
+    dependencies:
+      - package: CairnsKit
+        product: CairnsKit
+    # No code-signing settings baked in: CI builds with CODE_SIGNING_ALLOWED=NO
+    # and a developer's Xcode applies their personal team automatically.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cairns.ios
+        TARGETED_DEVICE_FAMILY: "1,2" # iPhone + iPad
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "6.0" # Swift 6 language mode
+        SWIFT_STRICT_CONCURRENCY: complete
+        GENERATE_INFOPLIST_FILE: YES # plist synthesized from the keys below
+        INFOPLIST_KEY_CFBundleDisplayName: Cairns
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    scheme: {} # generate a shared "Cairns" scheme for bin/ci
