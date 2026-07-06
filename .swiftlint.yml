@@ -6,6 +6,7 @@ disabled_rules:
   - opening_brace
 excluded:
   - .build
+  - CairnsKit/.build
   - tmp
   - dist
   - "*.xcodeproj"
