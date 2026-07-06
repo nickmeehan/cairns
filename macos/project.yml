@@ -1,0 +1,37 @@
+name: Cairns
+options:
+  bundleIdPrefix: com.cairns
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+packages:
+  CairnsKit:
+    path: ../CairnsKit
+targets:
+  Cairns:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - App
+    dependencies:
+      - package: CairnsKit
+        product: CairnsKit
+    settings:
+      base:
+        PRODUCT_NAME: Cairns
+        PRODUCT_BUNDLE_IDENTIFIER: com.cairns.mac
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "6.0"
+        CODE_SIGNING_ALLOWED: NO
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Cairns
+schemes:
+  Cairns:
+    build:
+      targets:
+        Cairns: all
+    run:
+      config: Debug
