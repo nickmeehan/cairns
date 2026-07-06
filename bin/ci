@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# The gate. Pure check, no fixing: format lint, SwiftLint, CairnsKit tests,
+# then compile both app shells. Green here = done.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+run() { echo; echo "=== $* ==="; "$@"; }
+
+run mise exec -- swiftformat --lint .
+run mise exec -- swiftlint --strict --quiet
+
+(cd CairnsKit && run swift test)
+
+(cd ios &&
+  run mise exec -- xcodegen generate &&
+  run env NSUnbufferedIO=YES xcodebuild build -project Cairns.xcodeproj -scheme Cairns \
+    -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO -quiet)
+
+(cd macos &&
+  run mise exec -- xcodegen generate &&
+  run env NSUnbufferedIO=YES xcodebuild build -project Cairns.xcodeproj -scheme Cairns \
+    -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO -quiet)
+
+echo
+echo "ci ok"

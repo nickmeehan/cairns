@@ -1,0 +1,23 @@
+# SwiftLint is the semantic wall (force-unwraps, complexity) beside
+# SwiftFormat's style pass. Style is SwiftFormat's job — the two rules
+# below fight its output, so they're off.
+disabled_rules:
+  - trailing_comma
+  - opening_brace
+excluded:
+  - .build
+  - tmp
+  - dist
+  - "*.xcodeproj"
+opt_in_rules:
+  - force_unwrapping
+force_unwrapping: error
+cyclomatic_complexity:
+  warning: 6
+  error: 8
+function_body_length:
+  warning: 25
+  error: 40
+type_body_length:
+  warning: 150
+  error: 200

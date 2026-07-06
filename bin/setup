@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Idempotent bootstrap: pinned tools via mise, nothing else. Xcode is pinned
+# by .xcode-version (checked, never auto-installed).
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+command -v mise >/dev/null 2>&1 ||
+  { echo "ERROR: mise not found — install it first (brew install mise)" >&2; exit 1; }
+
+mise install
+
+want=$(cat .xcode-version)
+have=$(xcodebuild -version 2>/dev/null | awk 'NR==1 {print $2}')
+[ "$have" = "$want" ] ||
+  echo "WARNING: Xcode $have active, $want pinned — builds may drift (xcode-select to fix)"
+
+echo "setup ok"
