@@ -31,6 +31,9 @@ struct CaptureView: View {
             Button("Save") { Task { await model.save() } }
                 .keyboardShortcut("s", modifiers: .command)
                 .buttonStyle(.borderedProminent)
+                // Prominent buttons default to a white label, which fails
+                // contrast on the pale dark-mode accent; OnAccent adapts.
+                .foregroundStyle(Color("OnAccent"))
             saveOnReturn
         }
         .padding(12)

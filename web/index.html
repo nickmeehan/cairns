@@ -6,15 +6,18 @@
   <title>Cairns — your notes, straight to your GitHub repo</title>
   <meta name="description" content="Native Mac and iOS note capture that commits plain markdown straight to a GitHub repository you own. No server, no subscription.">
   <style>
-    /* Brand tokens mirror the app (trailhead packages/pwa/src/styles.css). */
+    /* Brand tokens mirror the app (trailhead packages/pwa/src/styles.css),
+       with light-mode accent/muted one step darker so link text, muted copy,
+       and the CTA all clear WCAG AA here (the app's values sat at 3.5-4.1:1
+       against this page's backgrounds). Dark mode passes as-is. */
     :root {
       --bg: #FAFAF8;
-      --surface: #FFFFFF;
+      --surface: #FFFEFB;
       --text: #1A1918;
-      --muted: #7C7A75;
-      --accent: #6B8F5E;
-      --accent-hover: #5A7C4E;
-      --on-accent: #FFFFFF;
+      --muted: #74726D;
+      --accent: #5A7C4E;
+      --accent-hover: #4A6A40;
+      --on-accent: #FAFAF8;
       --border: #E8E6E3;
       --shadow: 0 1px 2px rgba(26, 25, 24, .04), 0 8px 24px rgba(26, 25, 24, .05);
       --radius: 12px;

@@ -33,6 +33,9 @@ struct SignInView: View {
                 .foregroundStyle(.secondary).multilineTextAlignment(.center)
             Button("Sign in with GitHub", action: start)
                 .buttonStyle(.borderedProminent)
+                // Prominent buttons default to a white label, which fails
+                // contrast on the pale dark-mode accent; OnAccent adapts.
+                .foregroundStyle(Color("OnAccent"))
                 .disabled(busy)
         }
     }
@@ -52,6 +55,7 @@ struct SignInView: View {
                 Label("Open github.com", systemImage: "arrow.up.right.square")
             }
             .buttonStyle(.borderedProminent)
+            .foregroundStyle(Color("OnAccent"))
             ProgressView("Waiting for authorization…").padding(.top)
         }
     }
