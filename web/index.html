@@ -6,26 +6,40 @@
   <title>Cairns — your notes, straight to your GitHub repo</title>
   <meta name="description" content="Native Mac and iOS note capture that commits plain markdown straight to a GitHub repository you own. No server, no subscription.">
   <style>
+    /* Brand tokens mirror the app (trailhead packages/pwa/src/styles.css). */
     :root {
-      --bg: #faf9f7;
-      --surface: #ffffff;
-      --text: #211f1c;
-      --muted: #6b6862;
-      --accent: #a1573a;
-      --border: #e7e3dd;
-      --shadow: 0 1px 2px rgba(33, 31, 28, .04), 0 8px 24px rgba(33, 31, 28, .05);
+      --bg: #FAFAF8;
+      --surface: #FFFFFF;
+      --text: #1A1918;
+      --muted: #7C7A75;
+      --accent: #6B8F5E;
+      --accent-hover: #5A7C4E;
+      --on-accent: #FFFFFF;
+      --border: #E8E6E3;
+      --shadow: 0 1px 2px rgba(26, 25, 24, .04), 0 8px 24px rgba(26, 25, 24, .05);
       --radius: 12px;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #14130f;
-        --surface: #1c1b16;
-        --text: #ece9e2;
-        --muted: #a09a8f;
-        --accent: #d98f68;
-        --border: #2c2a23;
+        --bg: #18160F;
+        --surface: #211F18;
+        --text: #FAFAF8;
+        --muted: #B5ABA0;
+        --accent: #9BC286;
+        --accent-hover: #AED198;
+        --on-accent: #18160F;
+        --border: #4A4640;
         --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
       }
+    }
+
+    /* Self-hosted (SIL OFL) — same file the app ships; no external requests. */
+    @font-face {
+      font-family: 'Libre Baskerville';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('fonts/libre-baskerville-700-latin.woff2') format('woff2');
     }
 
     * { box-sizing: border-box; }
@@ -52,11 +66,12 @@
     header { padding: 88px 0 64px; text-align: center; }
     .mark { color: var(--accent); width: 52px; height: 68px; display: inline-block; }
     h1 {
+      font-family: 'Libre Baskerville', Georgia, serif;
       font-size: 2.6rem;
       line-height: 1.1;
       letter-spacing: -0.02em;
       margin: 20px 0 0;
-      font-weight: 650;
+      font-weight: 700;
     }
     .tagline {
       font-size: 1.3rem;
@@ -75,11 +90,11 @@
       margin-top: 32px;
       padding: 12px 24px;
       background: var(--accent);
-      color: #fff;
+      color: var(--on-accent);
       border-radius: 999px;
       font-weight: 550;
     }
-    .cta:hover { text-decoration: none; opacity: .92; }
+    .cta:hover { text-decoration: none; background: var(--accent-hover); }
 
     /* Sections */
     section { padding: 40px 0; border-top: 1px solid var(--border); }
