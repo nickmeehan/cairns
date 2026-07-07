@@ -14,12 +14,13 @@
       --bg: #FAFAF8;
       --surface: #FFFEFB;
       --text: #1A1918;
-      --muted: #74726D;
+      --muted: #5F5D58;
+      --stone: #8B8E87;
+      --berry: #96482F;
       --accent: #5A7C4E;
       --accent-hover: #4A6A40;
       --on-accent: #FAFAF8;
-      --border: #E8E6E3;
-      --shadow: 0 1px 2px rgba(26, 25, 24, .04), 0 8px 24px rgba(26, 25, 24, .05);
+      --border: #E4E6E1;
       --radius: 12px;
     }
     @media (prefers-color-scheme: dark) {
@@ -28,11 +29,12 @@
         --surface: #211F18;
         --text: #FAFAF8;
         --muted: #B5ABA0;
+        --stone: #A9ADA4;
+        --berry: #D98F73;
         --accent: #9BC286;
         --accent-hover: #AED198;
         --on-accent: #18160F;
-        --border: #4A4640;
-        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
+        --border: #474A40;
       }
     }
 
@@ -67,7 +69,7 @@
 
     /* Hero */
     header { padding: 88px 0 64px; text-align: center; }
-    .mark { color: var(--accent); width: 52px; height: 68px; display: inline-block; }
+    .mark { color: var(--stone); width: 52px; height: 68px; display: inline-block; }
     h1 {
       font-family: 'Libre Baskerville', Georgia, serif;
       font-size: 2.6rem;
@@ -102,11 +104,10 @@
     /* Sections */
     section { padding: 40px 0; border-top: 1px solid var(--border); }
     h2 {
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.2rem;
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 700;
       margin: 0 0 28px;
     }
 
@@ -123,15 +124,15 @@
     .features h3 kbd {
       font: inherit;
       font-size: .82em;
-      color: var(--muted);
+      color: var(--berry);
       background: var(--bg);
-      border: 1px solid var(--border);
+      border: 1px solid var(--berry);
       border-radius: 6px;
       padding: 1px 6px;
       margin-left: 6px;
       white-space: nowrap;
     }
-    .features p { margin: 0; color: var(--muted); font-size: .97rem; }
+    .features p { margin: 0; color: var(--text); font-size: .97rem; }
 
     /* Install */
     .cards { display: grid; gap: 20px; }
@@ -140,7 +141,6 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       padding: 24px;
     }
     .card h3 { margin: 0 0 10px; font-size: 1.15rem; }
@@ -172,13 +172,15 @@
 <body>
   <div class="wrap">
     <header>
-      <!-- A small cairn: stacked stones, largest at the base. -->
+      <!-- A small cairn: stacked stones, largest at the base. Two-tone: the
+           lower stones are stone grey, the newest (top) stone is lichen green —
+           the fresh note is the living stone. -->
       <svg class="mark" viewBox="0 0 52 68" aria-hidden="true" fill="currentColor">
         <ellipse cx="26" cy="61" rx="19" ry="6.5"/>
         <ellipse cx="25" cy="48" rx="15" ry="6"/>
         <ellipse cx="27" cy="36" rx="12" ry="5.5"/>
         <ellipse cx="25" cy="25" rx="9" ry="5"/>
-        <ellipse cx="26" cy="15" rx="6" ry="4.5"/>
+        <ellipse cx="26" cy="15" rx="6" ry="4.5" style="fill: var(--accent)"/>
       </svg>
       <h1>Cairns</h1>
       <p class="tagline">Your notes, straight to your GitHub repo.</p>

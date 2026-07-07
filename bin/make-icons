@@ -1,0 +1,93 @@
+#!/usr/bin/swift
+// Generates both apps' icons from the web mark's cairn (web/index.html).
+// Writes every PNG the two AppIcon.appiconset catalogs reference; rerun
+// after changing colours or geometry. No dependencies beyond AppKit.
+import AppKit
+
+// Stones from the web mark, viewBox 52x68 (SVG coordinates, y-down).
+let stones: [(cx: Double, cy: Double, rx: Double, ry: Double)] = [
+    (26, 61, 19, 6.5),
+    (25, 48, 15, 6),
+    (27, 36, 12, 5.5),
+    (25, 25, 9, 5),
+    (26, 15, 6, 4.5),
+]
+
+func rgb(_ hex: UInt32) -> CGColor {
+    CGColor(srgbRed: CGFloat((hex >> 16) & 0xFF) / 255,
+            green: CGFloat((hex >> 8) & 0xFF) / 255,
+            blue: CGFloat(hex & 0xFF) / 255,
+            alpha: 1)
+}
+
+let peat = rgb(0x18160F)
+let stoneGrey = rgb(0xA9ADA4)
+let lichen = rgb(0x9BC286)
+
+// Draw the cairn centred in `tile`, mark height at 62% of the tile height
+// (comfortable margins). The top stone (cy=15) is lichen: the living stone.
+func drawCairn(_ ctx: CGContext, in tile: CGRect) {
+    let scale = tile.height * 0.62 / 68
+    let originX = tile.midX - 52 * scale / 2
+    let originY = tile.midY - 68 * scale / 2
+    for s in stones {
+        ctx.setFillColor(s.cy == 15 ? lichen : stoneGrey)
+        let cx = originX + s.cx * scale
+        let cy = originY + (68 - s.cy) * scale // flip SVG y-down to CG y-up
+        ctx.fillEllipse(in: CGRect(x: cx - s.rx * scale, y: cy - s.ry * scale,
+                                   width: 2 * s.rx * scale, height: 2 * s.ry * scale))
+    }
+}
+
+func makeContext(_ px: Int) -> CGContext {
+    guard let space = CGColorSpace(name: CGColorSpace.sRGB),
+          let ctx = CGContext(data: nil, width: px, height: px, bitsPerComponent: 8,
+                              bytesPerRow: 0, space: space,
+                              bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+    else { fatalError("CGContext(\(px)px) failed") }
+    return ctx
+}
+
+func writePNG(_ ctx: CGContext, to url: URL) {
+    guard let image = ctx.makeImage(),
+          let png = NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])
+    else { fatalError("PNG encode failed for \(url.path)") }
+    do { try png.write(to: url) } catch { fatalError("write failed: \(error)") }
+    print("wrote \(url.path) (\(ctx.width)x\(ctx.height))")
+}
+
+let root = URL(fileURLWithPath: CommandLine.arguments[0]).resolvingSymlinksInPath()
+    .deletingLastPathComponent().deletingLastPathComponent()
+let iosDir = root.appendingPathComponent("ios/App/Assets.xcassets/AppIcon.appiconset")
+let macDir = root.appendingPathComponent("macos/App/Assets.xcassets/AppIcon.appiconset")
+for dir in [iosDir, macDir] {
+    try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+}
+
+// iOS: one full-bleed 1024 square; the OS applies the corner mask itself.
+let ios = makeContext(1024)
+let full = CGRect(x: 0, y: 0, width: 1024, height: 1024)
+ios.setFillColor(peat)
+ios.fill(full)
+drawCairn(ios, in: full)
+writePNG(ios, to: iosDir.appendingPathComponent("AppIcon.png"))
+
+// macOS: per HIG, a rounded-rect tile with transparent margins — content
+// inset 10% per side, corner radius 185/1024 of the tile size, peat inside.
+for pt in [16, 32, 128, 256, 512] {
+    for scale in [1, 2] {
+        let px = pt * scale
+        let ctx = makeContext(px)
+        let size = CGFloat(px)
+        let tile = CGRect(x: 0, y: 0, width: size, height: size)
+            .insetBy(dx: size * 0.1, dy: size * 0.1)
+        let radius = size * 185 / 1024
+        ctx.addPath(CGPath(roundedRect: tile, cornerWidth: radius,
+                           cornerHeight: radius, transform: nil))
+        ctx.setFillColor(peat)
+        ctx.fillPath()
+        drawCairn(ctx, in: tile)
+        let name = "icon_\(pt)x\(pt)\(scale == 2 ? "@2x" : "").png"
+        writePNG(ctx, to: macDir.appendingPathComponent(name))
+    }
+}
